@@ -1,6 +1,6 @@
-
 CREATE DATABASE IF NOT EXISTS `audit`;
 USE `audit`;
+
 
 CREATE TABLE IF NOT EXISTS `categories` (
   `category` int(11) NOT NULL,
@@ -16,15 +16,14 @@ INSERT INTO `categories` (`category`, `rate_for_1_hour`) VALUES
 CREATE TABLE IF NOT EXISTS `employees` (
   `code_employees` int(11) NOT NULL,
   `category` int(11) DEFAULT NULL,
-  `fullname_employee` text DEFAULT NULL,
-  `passport_number` text DEFAULT NULL,
-  `date_of_birth` date DEFAULT NULL,
+  `fullname_employee` text NOT NULL,
+  `passport_number` text NOT NULL,
+  `date_of_birth` date NOT NULL,
   `work_phone_number` text DEFAULT NULL,
   KEY `code employees` (`code_employees`),
   KEY `FK_employees_categories` (`category`),
   CONSTRAINT `FK_employees_categories` FOREIGN KEY (`category`) REFERENCES `categories` (`category`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 
 INSERT INTO `employees` (`code_employees`, `category`, `fullname_employee`, `passport_number`, `date_of_birth`, `work_phone_number`) VALUES
 	(1, NULL, 'name1', '6546', '2022-01-28', '+32432'),
@@ -38,17 +37,15 @@ CREATE TABLE IF NOT EXISTS `works` (
   `code_employee` int(11) DEFAULT NULL,
   `date_of_completed work` date DEFAULT NULL,
   `count_of_hours_worked` int(11) DEFAULT NULL,
-  `category` int(11) DEFAULT NULL,
   KEY `FK_work_employees` (`code_employee`),
-  KEY `FK_work_categories` (`category`),
-  CONSTRAINT `FK_work_categories` FOREIGN KEY (`category`) REFERENCES `categories` (`category`),
   CONSTRAINT `FK_work_employees` FOREIGN KEY (`code_employee`) REFERENCES `employees` (`code_employees`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-INSERT INTO `works` (`company_name`, `code_employee`, `date_of_completed work`, `count_of_hours_worked`, `category`) VALUES
-	('namec2', 2, '2022-01-30', 4, 2),
-	('namec3', 3, '2022-01-29', 6, 3),
-	('namec1', 1, '2022-01-31', 2, NULL),
-	('namec1', 4, '2022-01-31', 3, 2),
-	('namec4', 3, '2022-02-09', 5, 3);
+INSERT INTO `works` (`company_name`, `code_employee`, `date_of_completed work`, `count_of_hours_worked`) VALUES
+	('namec2', 2, '2022-01-30', 4),
+	('namec3', 3, '2022-01-29', 6),
+	('namec1', 1, '2022-01-31', 2),
+	('namec1', 4, '2022-01-31', 3),
+	('namec4', 3, '2022-02-09', 5);
+
