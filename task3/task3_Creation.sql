@@ -1,6 +1,23 @@
 CREATE DATABASE IF NOT EXISTS `bank_deposits`;
 USE `bank_deposits`;
 
+CREATE TABLE IF NOT EXISTS `client` (
+  `code_client` int(11) NOT NULL,
+  `fullname_client` text NOT NULL,
+  `passport_number` text NOT NULL,
+  `address` text NOT NULL,
+  `telephone` text NOT NULL,
+  KEY `code_client` (`code_client`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `deposit` (
+  `code_deposit` int(11) NOT NULL,
+  `name_deposit` text DEFAULT NULL,
+  `storage_life` int(11) DEFAULT NULL,
+  `rate,_per_annum` text DEFAULT NULL,
+  KEY `code deposit` (`code_deposit`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 CREATE TABLE IF NOT EXISTS `bank account` (
   `№ _account` int(11) NOT NULL,
   `code_client` int(11) NOT NULL,
@@ -15,22 +32,4 @@ CREATE TABLE IF NOT EXISTS `bank account` (
   CONSTRAINT `FK_bank account_deposit` FOREIGN KEY (`code_deposit`) REFERENCES `deposit` (`code_deposit`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE IF NOT EXISTS `client` (
-  `code_client` int(11) NOT NULL,
-  `№_account` int(11) NOT NULL,
-  `fullname_client` text DEFAULT NULL,
-  `passport_number` text DEFAULT NULL,
-  `address` text DEFAULT NULL,
-  `telephone` text DEFAULT NULL,
-  KEY `code_client` (`code_client`),
-  KEY `FK_client_bank account` (`№_account`),
-  CONSTRAINT `FK_client_bank account` FOREIGN KEY (`№_account`) REFERENCES `bank account` (`№ _account`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE IF NOT EXISTS `deposit` (
-  `code_deposit` int(11) NOT NULL,
-  `name_deposit` text DEFAULT NULL,
-  `storage_life` int(11) DEFAULT NULL,
-  `rate,_per_annum` text DEFAULT NULL,
-  KEY `code deposit` (`code_deposit`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
