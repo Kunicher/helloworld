@@ -1,6 +1,12 @@
 CREATE DATABASE IF NOT EXISTS `factory`;
 USE `factory`;
 
+CREATE TABLE IF NOT EXISTS `products` (
+  `code_product` int(11) NOT NULL,
+  `name_product` text DEFAULT NULL,
+  KEY `code_product` (`code_product`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 CREATE TABLE IF NOT EXISTS `model` (
   `code_model` int(11) NOT NULL,
   `name_model` text DEFAULT NULL,
@@ -9,12 +15,6 @@ CREATE TABLE IF NOT EXISTS `model` (
   KEY `code_model` (`code_model`),
   KEY `FK_model_products` (`code_product`),
   CONSTRAINT `FK_model_products` FOREIGN KEY (`code_product`) REFERENCES `products` (`code_product`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE IF NOT EXISTS `products` (
-  `code_product` int(11) NOT NULL,
-  `name_product` text DEFAULT NULL,
-  KEY `code_product` (`code_product`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS `receipts` (

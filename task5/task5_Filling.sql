@@ -1,6 +1,17 @@
 CREATE DATABASE IF NOT EXISTS `factory`;
 USE `factory`;
 
+CREATE TABLE IF NOT EXISTS `products` (
+  `code_product` int(11) NOT NULL,
+  `name_product` text DEFAULT NULL,
+  KEY `code_product` (`code_product`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `products` (`code_product`, `name_product`) VALUES
+	(2, 'prod2'),
+	(3, 'prod3'),
+	(1, 'prod1');
+
 CREATE TABLE IF NOT EXISTS `model` (
   `code_model` int(11) NOT NULL,
   `name_model` text DEFAULT NULL,
@@ -16,18 +27,6 @@ INSERT INTO `model` (`code_model`, `name_model`, `code_product`, `cost_model`) V
 	(3, 'model3', 3, 300),
 	(1, 'model1', 1, 100),
 	(4, 'model4', 2, 50);
-
-CREATE TABLE IF NOT EXISTS `products` (
-  `code_product` int(11) NOT NULL,
-  `name_product` text DEFAULT NULL,
-  KEY `code_product` (`code_product`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
-INSERT INTO `products` (`code_product`, `name_product`) VALUES
-	(2, 'prod2'),
-	(3, 'prod3'),
-	(1, 'prod1');
 
 CREATE TABLE IF NOT EXISTS `receipts` (
   `code_receipts` int(11) NOT NULL,
