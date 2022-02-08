@@ -1,11 +1,11 @@
-CREATE DATABASE IF NOT EXISTS `audit`;
-USE `audit`;
 
+CREATE DATABASE IF NOT EXISTS `audit` ;
+USE `audit`;
 
 CREATE TABLE IF NOT EXISTS `categories` (
   `category` int(11) NOT NULL,
-  `rate_for_1_hour` decimal(10,0) DEFAULT NULL,
-  KEY `category` (`category`)
+  `rate_for_1_hour` decimal(10,0) NOT NULL,
+  PRIMARY KEY (`category`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `categories` (`category`, `rate_for_1_hour`) VALUES
@@ -20,10 +20,11 @@ CREATE TABLE IF NOT EXISTS `employees` (
   `passport_number` text NOT NULL,
   `date_of_birth` date NOT NULL,
   `work_phone_number` text DEFAULT NULL,
-  KEY `code employees` (`code_employees`),
+  PRIMARY KEY (`code_employees`),
   KEY `FK_employees_categories` (`category`),
   CONSTRAINT `FK_employees_categories` FOREIGN KEY (`category`) REFERENCES `categories` (`category`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 INSERT INTO `employees` (`code_employees`, `category`, `fullname_employee`, `passport_number`, `date_of_birth`, `work_phone_number`) VALUES
 	(1, NULL, 'name1', '6546', '2022-01-28', '+32432'),
@@ -33,10 +34,10 @@ INSERT INTO `employees` (`code_employees`, `category`, `fullname_employee`, `pas
 	(5, 1, 'name4', '3241', '2022-01-25', '+86754');
 
 CREATE TABLE IF NOT EXISTS `works` (
-  `company_name` text DEFAULT NULL,
-  `code_employee` int(11) DEFAULT NULL,
+  `company_name` text NOT NULL,
+  `code_employee` int(11) NOT NULL,
   `date_of_completed work` date DEFAULT NULL,
-  `count_of_hours_worked` int(11) DEFAULT NULL,
+  `count_of_hours_worked` int(11) NOT NULL,
   KEY `FK_work_employees` (`code_employee`),
   CONSTRAINT `FK_work_employees` FOREIGN KEY (`code_employee`) REFERENCES `employees` (`code_employees`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -48,4 +49,3 @@ INSERT INTO `works` (`company_name`, `code_employee`, `date_of_completed work`, 
 	('namec1', 1, '2022-01-31', 2),
 	('namec1', 4, '2022-01-31', 3),
 	('namec4', 3, '2022-02-09', 5);
-
