@@ -16,7 +16,6 @@ CREATE TABLE IF NOT EXISTS `readers` (
   PRIMARY KEY (`CodeReader`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-
 CREATE TABLE IF NOT EXISTS `book` (
   `CodeBook` int(11) NOT NULL,
   `NameBook` text NOT NULL,
@@ -35,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `keep_out` (
   `CodeBook` int(11) NOT NULL,
   `DateKeep` date NOT NULL,
   `SingIn` text DEFAULT NULL,
+  PRIMARY KEY (`CodeReader`,`CodeBook`),
   KEY `FK_keep_out_book` (`CodeBook`),
   KEY `FK_keep_out_readers` (`CodeReader`),
   CONSTRAINT `FK_keep_out_book` FOREIGN KEY (`CodeBook`) REFERENCES `book` (`CodeBook`) ON DELETE NO ACTION ON UPDATE NO ACTION,

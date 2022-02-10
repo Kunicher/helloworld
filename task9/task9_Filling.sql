@@ -1,15 +1,12 @@
 CREATE DATABASE IF NOT EXISTS `library`;
 USE `library`;
 
-
-
 CREATE TABLE IF NOT EXISTS `publishing_companies` (
   `CodeCompany` int(11) NOT NULL,
   `NameCompany` text NOT NULL,
   `City` text DEFAULT NULL,
   PRIMARY KEY (`CodeCompany`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 
 INSERT INTO `publishing_companies` (`CodeCompany`, `NameCompany`, `City`) VALUES
 	(1, 'name1', 'City1'),
@@ -23,7 +20,6 @@ CREATE TABLE IF NOT EXISTS `readers` (
   `Telephone` text DEFAULT NULL,
   PRIMARY KEY (`CodeReader`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 
 INSERT INTO `readers` (`CodeReader`, `FullNameReader`, `Address`, `Telephone`) VALUES
 	(1, 'name1', 'ad1', '+1'),
@@ -53,6 +49,7 @@ CREATE TABLE IF NOT EXISTS `keep_out` (
   `CodeBook` int(11) NOT NULL,
   `DateKeep` date NOT NULL,
   `SingIn` text DEFAULT NULL,
+  PRIMARY KEY (`CodeReader`,`CodeBook`),
   KEY `FK_keep_out_book` (`CodeBook`),
   KEY `FK_keep_out_readers` (`CodeReader`),
   CONSTRAINT `FK_keep_out_book` FOREIGN KEY (`CodeBook`) REFERENCES `book` (`CodeBook`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -63,3 +60,5 @@ INSERT INTO `keep_out` (`CodeReader`, `CodeBook`, `DateKeep`, `SingIn`) VALUES
 	(1, 2, '2021-07-08', 'da'),
 	(2, 1, '2021-12-08', 'ad'),
 	(3, 3, '2021-09-08', 'we');
+
+
