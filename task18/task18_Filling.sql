@@ -1,6 +1,20 @@
 CREATE DATABASE IF NOT EXISTS `furniture`;
 USE `furniture`;
 
+CREATE TABLE IF NOT EXISTS `clients` (
+  `CodeClient` int(11) NOT NULL,
+  `FullnameClient` text NOT NULL,
+  `AddressClient` text NOT NULL,
+  `Telephone` text NOT NULL,
+  PRIMARY KEY (`CodeClient`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `clients` (`CodeClient`, `FullnameClient`, `AddressClient`, `Telephone`) VALUES
+	(1, 'Name1', 'Ad1', '+1'),
+	(2, 'Name2', 'Ad2', '+2'),
+	(3, 'Name3', 'Ad3', '+3'),
+	(4, 'Name4', 'Ad4', '+4');
+
 CREATE TABLE IF NOT EXISTS `models` (
   `CodeFurniture` int(11) NOT NULL,
   `NameFurniture` text NOT NULL,
@@ -16,20 +30,6 @@ INSERT INTO `models` (`CodeFurniture`, `NameFurniture`, `Model`, `Specifications
 	(3, 'Name3', 'Model3', 'Spec3', 3000.00),
 	(4, 'Name4', 'Model4', 'Spec4', 4000.00),
 	(5, 'Name5', 'Model5', 'Spec5', 5000.00);
-
-CREATE TABLE IF NOT EXISTS `clients` (
-  `CodeClient` int(11) NOT NULL,
-  `FullnameClient` text NOT NULL,
-  `AddressClient` text NOT NULL,
-  `Telephone` text NOT NULL,
-  PRIMARY KEY (`CodeClient`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-INSERT INTO `clients` (`CodeClient`, `FullnameClient`, `AddressClient`, `Telephone`) VALUES
-	(1, 'Name1', 'Ad1', '+1'),
-	(2, 'Name2', 'Ad2', '+2'),
-	(3, 'Name3', 'Ad3', '+3'),
-	(4, 'Name4', 'Ad4', '+4');
 
 CREATE TABLE IF NOT EXISTS `contracts` (
   `NumberContract` int(11) NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `sales` (
   `CodeFurniture` int(11) NOT NULL,
   `NumberContract` int(11) NOT NULL,
   `Count` int(11) DEFAULT NULL,
-  UNIQUE KEY `NumberContract` (`NumberContract`),
+  PRIMARY KEY (`NumberContract`,`CodeFurniture`) USING BTREE,
   KEY `FK_sales_models` (`CodeFurniture`),
   CONSTRAINT `FK_sales_contracts` FOREIGN KEY (`NumberContract`) REFERENCES `contracts` (`NumberContract`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_sales_models` FOREIGN KEY (`CodeFurniture`) REFERENCES `models` (`CodeFurniture`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -60,6 +60,6 @@ CREATE TABLE IF NOT EXISTS `sales` (
 
 INSERT INTO `sales` (`CodeFurniture`, `NumberContract`, `Count`) VALUES
 	(1, 1, 1),
-	(2, 2, 2),
-	(3, 3, 3),
+	(3, 2, 3),
+	(2, 3, 2),
 	(2, 4, 1);
