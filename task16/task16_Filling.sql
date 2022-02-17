@@ -42,7 +42,6 @@ CREATE TABLE IF NOT EXISTS `customers` (
   CONSTRAINT `FK_customers_banks` FOREIGN KEY (`CodeBank`) REFERENCES `banks` (`CodeBank`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-
 INSERT INTO `customers` (`NumberCard`, `FullnameCustomer`, `AddressCustomer`, `CodeBank`) VALUES
 	(1, 'Name1', 'Ad1', 1),
 	(2, 'Name2', 'Ad2', 2),
@@ -55,20 +54,18 @@ INSERT INTO `customers` (`NumberCard`, `FullnameCustomer`, `AddressCustomer`, `C
 CREATE TABLE IF NOT EXISTS `operations` (
   `NumberCardCustomer` int(11) NOT NULL,
   `NumberCashMachines` int(11) NOT NULL,
-  `Date` date NOT NULL,
-  `Time` time NOT NULL,
+  `DateTime` datetime NOT NULL,
   `Commission` text NOT NULL,
   `IssueAmount` decimal(10,0) NOT NULL,
-  PRIMARY KEY (`NumberCardCustomer`,`Date`,`Time`) USING BTREE,
+  PRIMARY KEY (`NumberCardCustomer`,`DateTime`,`NumberCashMachines`) USING BTREE,
   KEY `FK_operations_cash_machines` (`NumberCashMachines`),
   CONSTRAINT `FK_operations_cash_machines` FOREIGN KEY (`NumberCashMachines`) REFERENCES `cash_machines` (`Number`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_operations_customers` FOREIGN KEY (`NumberCardCustomer`) REFERENCES `customers` (`NumberCard`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-
-INSERT INTO `operations` (`NumberCardCustomer`, `NumberCashMachines`, `Date`, `Time`, `Commission`, `IssueAmount`) VALUES
-	(1, 2, '2022-02-13', '10:07:54', 'Yes', 10000),
-	(1, 1, '2022-02-15', '10:02:34', 'No', 1000),
-	(2, 2, '2022-02-13', '10:08:36', 'Yes', 15000),
-	(2, 3, '2022-02-15', '10:02:34', 'Yes', 5000),
-	(3, 3, '2022-02-14', '10:01:34', 'No', 5000);
+INSERT INTO `operations` (`NumberCardCustomer`, `NumberCashMachines`, `DateTime`, `Commission`, `IssueAmount`) VALUES
+	(1, 2, '2022-02-13 10:45:09', 'Yes', 10000),
+	(1, 2, '2022-02-13 10:45:10', 'Yes', 15000),
+	(3, 3, '2022-02-11 10:45:11', 'No', 5000),
+	(3, 3, '2022-02-13 10:45:12', 'Yes', 5000),
+	(5, 1, '2022-02-12 10:45:11', 'No', 1000);
