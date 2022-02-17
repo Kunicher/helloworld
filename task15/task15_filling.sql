@@ -14,6 +14,7 @@ INSERT INTO `clientinfo` (`CodeClient`, `NameClient`, `Addres`) VALUES
 	(3, 'Name3', 'Ad2'),
 	(4, 'Name4', NULL);
 
+
 CREATE TABLE IF NOT EXISTS `online_store` (
   `CodeStore` int(11) NOT NULL,
   `EmailAddress` text DEFAULT NULL,
@@ -26,23 +27,24 @@ INSERT INTO `online_store` (`CodeStore`, `EmailAddress`, `PaymentForDelivery`) V
 	(2, 'mail2', 'No'),
 	(3, 'mail3', 'Yes');
 
-  CREATE TABLE IF NOT EXISTS `products` (
-  `CodeProduct` int(11) NOT NULL DEFAULT 0,
+CREATE TABLE IF NOT EXISTS `products` (
+  `CodeProduct` int(11) NOT NULL,
   `NameProduct` text NOT NULL,
   `Firm` text NOT NULL,
   `Model` text NOT NULL,
+  `Price` decimal(10,2) NOT NULL,
   `TechnicalCharacteristics` text DEFAULT NULL,
-  `WarrantyPeriod` text DEFAULT NULL,
-  `Picture` text DEFAULT NULL,
+  `WarrantyPeriod` date DEFAULT NULL,
+  `Picture` blob DEFAULT NULL,
   PRIMARY KEY (`CodeProduct`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `products` (`CodeProduct`, `NameProduct`, `Firm`, `Model`, `TechnicalCharacteristics`, `WarrantyPeriod`, `Picture`) VALUES
-	(1, 'Name1', 'Firm1', 'Model1', 'TC1', 'WP1', 'Pict1'),
-	(2, 'Name2', 'Firm2', 'Model2', NULL, 'WP2', 'Pict2'),
-	(3, 'Name3', 'Firm3', 'Model3', 'TC3', NULL, NULL),
-	(4, 'Name4', 'Firm4', 'Model4', 'TC4', 'WP4', 'Pict4'),
-	(5, 'Name5', 'Firm5', 'Model5', 'TC5', 'WP5', NULL);
+INSERT INTO `products` (`CodeProduct`, `NameProduct`, `Firm`, `Model`, `Price`, `TechnicalCharacteristics`, `WarrantyPeriod`, `Picture`) VALUES
+	(1, 'Name1', 'Firm1', 'Model1', 100.00, 'TC1', '2022-02-17', _binary 0x7069637431),
+	(2, 'Name2', 'Firm2', 'Model2', 200.00, NULL, NULL, NULL),
+	(3, 'Name3', 'Firm3', 'Model3', 300.00, 'TC3', '2022-02-17', _binary 0x7069637433),
+	(4, 'Name4', 'Firm4', 'Model4', 400.00, 'TC4', NULL, _binary 0x7069637434),
+	(5, 'Name5', 'Firm5', 'Model5', 500.00, 'TC5', '2022-02-17', NULL);
 
 CREATE TABLE IF NOT EXISTS `order` (
   `CodeOrder` int(11) NOT NULL,
@@ -77,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `deliver` (
   `TimeDeliver` time DEFAULT NULL,
   `FullnameCourier` text NOT NULL,
   `CodeClient` int(11) NOT NULL,
-  UNIQUE KEY `CodeOrder` (`CodeOrder`),
+  PRIMARY KEY (`CodeOrder`),
   KEY `FK_deliver_clientinfo` (`CodeClient`),
   CONSTRAINT `FK_deliver_clientinfo` FOREIGN KEY (`CodeClient`) REFERENCES `clientinfo` (`CodeClient`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_deliver_order` FOREIGN KEY (`CodeOrder`) REFERENCES `order` (`CodeOrder`) ON DELETE NO ACTION ON UPDATE NO ACTION

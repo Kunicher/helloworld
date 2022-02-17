@@ -9,13 +9,14 @@ CREATE TABLE IF NOT EXISTS `clientinfo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `products` (
-  `CodeProduct` int(11) NOT NULL DEFAULT 0,
+  `CodeProduct` int(11) NOT NULL,
   `NameProduct` text NOT NULL,
   `Firm` text NOT NULL,
   `Model` text NOT NULL,
+  `Price` decimal(10,2) NOT NULL,
   `TechnicalCharacteristics` text DEFAULT NULL,
-  `WarrantyPeriod` text DEFAULT NULL,
-  `Picture` text DEFAULT NULL,
+  `WarrantyPeriod` date DEFAULT NULL,
+  `Picture` blob DEFAULT NULL,
   PRIMARY KEY (`CodeProduct`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -51,8 +52,10 @@ CREATE TABLE IF NOT EXISTS `deliver` (
   `TimeDeliver` time DEFAULT NULL,
   `FullnameCourier` text NOT NULL,
   `CodeClient` int(11) NOT NULL,
-  UNIQUE KEY `CodeOrder` (`CodeOrder`),
+  PRIMARY KEY (`CodeOrder`),
   KEY `FK_deliver_clientinfo` (`CodeClient`),
   CONSTRAINT `FK_deliver_clientinfo` FOREIGN KEY (`CodeClient`) REFERENCES `clientinfo` (`CodeClient`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_deliver_order` FOREIGN KEY (`CodeOrder`) REFERENCES `order` (`CodeOrder`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
